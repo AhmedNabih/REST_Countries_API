@@ -10,6 +10,7 @@ jobs:
       - checkout
       - python/load-cache
       - python/install-deps
+      - python/save-cache
       - run:
           command: ./API-Tests/TestsManager.py test
           name: Test

@@ -4,7 +4,8 @@ import unittest
 class TestBasic(unittest.TestCase):
 
     def test1(self):
-        self.assertTrue(200, 0)
+        self.assertEqual(self, 5, 4)
 
 
-unittest.main()
+if __name__ == '__main__':
+    unittest.main()

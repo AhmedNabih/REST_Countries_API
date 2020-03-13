@@ -18,10 +18,3 @@ jobs:
       - run:
           command: |
           pipenv run python API_Test/TestsManager.py test
-
-
-
-workflows:
-  main:
-    jobs:
-      - build-and-test

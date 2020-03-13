@@ -9,9 +9,8 @@ jobs:
     steps:
       - checkout
       - python/install-deps
-      - run: chmod u+rwx ./API_Tests/manage.py
       - run:
-          command: ./API_Tests/manage.py test
+          command: chmod u+rwx ./API_Tests/manage.py test
           name: Test
 
 workflows:

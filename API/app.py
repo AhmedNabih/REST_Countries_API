@@ -1,5 +1,5 @@
 import flask
-from flask import jsonify
+from flask import jsonify, render_template
 
 # Global Variables
 from API.Base_API import BaseAPI
@@ -15,17 +15,8 @@ def page_not_found(e):
 
 @app.route('/', methods=['GET'])
 def home():
-    baseAPI = BaseAPI()
-    try:
-        info = baseAPI.get_country_info('name', 'egypt')
-
-        if info is not None:
-            return jsonify(info)
-        else:
-            return page_not_found
-    except:
-        return page_not_found
+    return render_template("home.html")
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

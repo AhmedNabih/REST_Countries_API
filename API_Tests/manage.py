@@ -7,5 +7,4 @@ class TestBasic(unittest.TestCase):
         self.assertTrue(200, 200)
 
 
-if __name__ == '__main__':
-    unittest.main()
+unittest.main()

@@ -1,13 +1,11 @@
 import flask
-import requests
-import json
+from flask import jsonify
 
 # Global Variables
-from flask import jsonify
+from API.Base_API import BaseAPI
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
-api_url_base = 'https://restcountries.eu/rest/v2/'
 
 
 @app.errorhandler(404)
@@ -17,21 +15,16 @@ def page_not_found(e):
 
 @app.route('/', methods=['GET'])
 def home():
-    info = get_country_info()
-    if info is not None:
-        return jsonify(info)
-    else:
+    baseAPI = BaseAPI()
+    try:
+        info = baseAPI.get_country_info('name', 'egypt')
+
+        if info is not None:
+            return jsonify(info)
+        else:
+            return page_not_found
+    except:
         return page_not_found
-
-
-def get_country_info():
-    api_url = api_url_base + 'name/egypt'
-    response = requests.get(api_url)
-
-    if response.status_code == 200:
-        return json.loads(response.content)
-    else:
-        return None
 
 
 if __name__ == '__main__':

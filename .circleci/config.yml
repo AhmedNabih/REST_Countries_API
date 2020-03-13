@@ -18,7 +18,6 @@ jobs:
       - run:
           command: |
           pipenv run python API_Test/TestsManager.py test
-          name: Test
 
 
 

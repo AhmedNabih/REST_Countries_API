@@ -12,8 +12,15 @@ jobs:
       - python/install-deps
       - python/save-cache
       - run:
-          command: /API_Test/TestsManager.py test
+          command: |
+            sudo pip install pipenv
+            pipenv install
+      - run:
+          command: |
+          pipenv run python API_Test/TestsManager.py test
           name: Test
+
+
 
 workflows:
   main:

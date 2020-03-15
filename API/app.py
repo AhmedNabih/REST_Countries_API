@@ -1,16 +1,15 @@
+import urllib
+
 import flask
-from flask import jsonify, render_template, request, url_for
-from werkzeug.utils import redirect
+from flask import render_template, request
 from API.Base_API import BaseAPI
-from API.DataHandler import DataHandler
+from API.offline_Data import OfflineData
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
-
-@app.errorhandler(404)
-def page_not_found(e):
-    return "<h1>404</h1><p>The resource could not be found.</p>", 404
+# Global variable
+INTERNETCONNECTION = False
 
 
 @app.route('/', methods=["POST", "GET"])
@@ -18,17 +17,20 @@ def home(output=""):
     if request.method == "POST":
         category = request.form.get("CategoryMenu")
         country = request.form.get("CountryMenu")
-        try:
-            baseAPI = BaseAPI()
-        except:
-            print("Error")
 
-        countryInfo = baseAPI.get_country_info(country)
+        baseAPI = BaseAPI()
+
+        countryInfo = None
+        if INTERNETCONNECTION:
+            countryInfo = baseAPI.get_country_info(country)
+        else:
+            o = OfflineData()
+            countryInfo = o.GetData(country)
 
         if countryInfo is not None:
             output = countryInfo[0]
         else:
-            output = ""
+            output = "Not Found"
         screenData = output[str(category)]
 
         return render_template("home.html", OUTPUT=screenData)
@@ -36,5 +38,14 @@ def home(output=""):
         return render_template("home.html", OUTPUT="")
 
 
+def CheckInternetConnection(host='http://google.com'):
+    try:
+        urllib.request.urlopen(host)  # Python 3.x
+        return True
+    except:
+        return False
+
+
 if __name__ == '__main__':
+    INTERNETCONNECTION = CheckInternetConnection()
     app.run(debug=True)

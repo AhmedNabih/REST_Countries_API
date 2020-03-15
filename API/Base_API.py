@@ -6,7 +6,7 @@ import requests
 class BaseAPI:
 
     def __init__(self):
-        self.__api_url_base = 'https://restcountries.eu/rest/v2/'
+        self.__api_url_base = 'https://restcountries.eu/rest/v2/name/'
 
     def connect(self):
         api_url = self.__api_url_base
@@ -17,8 +17,8 @@ class BaseAPI:
         else:
             return False
 
-    def get_country_info(self, cat, keys):
-        api_url = self.__api_url_base + cat + '/' + keys
+    def get_country_info(self, country):
+        api_url = self.__api_url_base + country
         response = requests.get(api_url)
 
         if response.status_code == 200:

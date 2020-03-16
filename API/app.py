@@ -28,7 +28,10 @@ def home(output=""):
             countryInfo = o.GetData(country)
 
         if countryInfo is not None:
-            output = countryInfo[0]
+            if INTERNETCONNECTION:
+                output = countryInfo[0]
+            else:
+                output = countryInfo
         else:
             output = "Not Found"
         screenData = output[str(category)]

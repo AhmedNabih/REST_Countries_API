@@ -2,15 +2,29 @@ import json
 
 
 class OfflineData:
+    FilePath = "offline_data/countriesData.json"
+    data = None
+
     def __init__(self):
-        self.__json_file = open("offline_data/countriesData.json", "r", encoding="utf8")
-        self.__data = json.load(self.__json_file)
+        self.__json_file = None
+        self.OpenFile()
+        self.LoadFile()
+        self.CloseFile()
+
+    def OpenFile(self):
+        try:
+            self.__json_file = open(self.FilePath, "r", encoding="utf8")
+        except IOError:
+            print("File Opening Error")
+
+    def CloseFile(self):
         self.__json_file.close()
-        print("ok")
+
+    def LoadFile(self):
+        self.data = json.load(self.__json_file)
 
     def GetData(self, countryName):
-        res = None
-        for i in self.__data:
+        for i in self.data:
             if i["name"].lower() == countryName.lower():
                 return i
         return None

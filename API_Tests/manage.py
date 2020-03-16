@@ -1,12 +1,13 @@
 import unittest
+from API.offline_Data import OfflineData
 
 
 class TestBasic(unittest.TestCase):
 
-    def test1(self):
+    def test_1(self):
         self.assertEqual(5, 5, "ggggg")
 
-    def test2(self):
+    def test_2(self):
         self.assertEqual(4, 4, "ahmed")
 
 

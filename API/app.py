@@ -10,10 +10,11 @@ app.config["DEBUG"] = True
 
 # Global variable
 INTERNETCONNECTION = False
+FilePath = "offline_data/countriesData.json"
 
-
-@app.route('/', methods=["POST", "GET"])
-def home(output=""):
+"""
+@app.route('/<crtyName>/<cat>', methods="GET")
+def outputpage(name, cat):
     if request.method == "POST":
         category = request.form.get("CategoryMenu")
         country = request.form.get("CountryMenu")
@@ -24,7 +25,10 @@ def home(output=""):
         if INTERNETCONNECTION:
             countryInfo = baseAPI.get_country_info(country)
         else:
-            o = OfflineData()
+            o = OfflineData(FilePath)
+            o.OpenFile()
+            o.LoadFile()
+            o.CloseFile()
             countryInfo = o.GetData(country)
 
         if countryInfo is not None:
@@ -39,6 +43,12 @@ def home(output=""):
         return render_template("home.html", OUTPUT=screenData)
     else:
         return render_template("home.html", OUTPUT="")
+"""
+
+
+@app.route('/', methods=["GET"])
+def home():
+    return render_template("home.html")
 
 
 def CheckInternetConnection(host='http://google.com'):

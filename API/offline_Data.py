@@ -23,8 +23,25 @@ class OfflineData:
         except:
             raise OSError
 
-    def GetData(self, countryName):
+    def GetData(self, countryName, cat):
+        if type(countryName) is not str:
+            return None
+        if type(cat) is not str:
+            return None
+
+        info = None
         for i in self.data:
             if i["name"].lower() == countryName.lower():
-                return i
-        return None
+                info = i
+            if i["alpha2Code"].lower() == countryName.lower():
+                info = i
+            if i["alpha3Code"].lower() == countryName.lower():
+                info = i
+
+        if info is not None:
+            try:
+                info = info[str(cat)]
+            except:
+                info = None
+
+        return info

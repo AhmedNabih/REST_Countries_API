@@ -1,7 +1,7 @@
 import urllib
-
+import urllib.request
 import flask
-from flask import render_template, request
+from flask import render_template, jsonify
 from API.Base_API import BaseAPI
 from API.offline_Data import OfflineData
 
@@ -12,38 +12,27 @@ app.config["DEBUG"] = True
 INTERNETCONNECTION = False
 FilePath = "offline_data/countriesData.json"
 
-"""
-@app.route('/<crtyName>/<cat>', methods="GET")
-def outputpage(name, cat):
-    if request.method == "POST":
-        category = request.form.get("CategoryMenu")
-        country = request.form.get("CountryMenu")
 
-        baseAPI = BaseAPI()
+@app.route("/<countryName>/<category>/")
+def outputPage(countryName, category):
+    baseAPI = BaseAPI()
 
-        countryInfo = None
-        if INTERNETCONNECTION:
-            countryInfo = baseAPI.get_country_info(country)
-        else:
-            o = OfflineData(FilePath)
-            o.OpenFile()
-            o.LoadFile()
-            o.CloseFile()
-            countryInfo = o.GetData(country)
-
-        if countryInfo is not None:
-            if INTERNETCONNECTION:
-                output = countryInfo[0]
-            else:
-                output = countryInfo
-        else:
-            output = "Not Found"
-        screenData = output[str(category)]
-
-        return render_template("home.html", OUTPUT=screenData)
+    if INTERNETCONNECTION:
+        countryInfo = baseAPI.get_country_info(str(countryName), category)
     else:
-        return render_template("home.html", OUTPUT="")
-"""
+        o = OfflineData(FilePath)
+        o.OpenFile()
+        o.LoadFile()
+        o.CloseFile()
+        countryInfo = o.GetData(countryName, category)
+
+    try:
+        if countryInfo is None:
+            countryInfo = "Not Found"
+    except:
+        countryInfo = "Invalid Input"
+
+    return jsonify(countryInfo)
 
 
 @app.route('/', methods=["GET"])
@@ -61,4 +50,5 @@ def CheckInternetConnection(host='http://google.com'):
 
 if __name__ == '__main__':
     INTERNETCONNECTION = CheckInternetConnection()
+    print(INTERNETCONNECTION)
     app.run(debug=True)

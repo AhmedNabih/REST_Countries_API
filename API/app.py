@@ -1,36 +1,31 @@
 import urllib
 import urllib.request
-import flask
-from flask import render_template, jsonify
+from flask import render_template, jsonify, Flask
 from API.Base_API import BaseAPI
 from API.offline_Data import OfflineData
-
-app = flask.Flask(__name__)
-app.config["DEBUG"] = True
+from API.InternetConnection import Connection
 
 # Global variable
 INTERNETCONNECTION = False
 FilePath = "offline_data/countriesData.json"
+app = Flask(__name__)
+app.config["DEBUG"] = True
 
 
 @app.route("/<countryName>/<category>/")
 def outputPage(countryName, category):
-    baseAPI = BaseAPI()
-
     if INTERNETCONNECTION:
+        baseAPI = BaseAPI()
         countryInfo = baseAPI.get_country_info(str(countryName), category)
     else:
-        o = OfflineData(FilePath)
-        o.OpenFile()
-        o.LoadFile()
-        o.CloseFile()
-        countryInfo = o.GetData(countryName, category)
+        offData = OfflineData(FilePath)
+        offData.OpenFile()
+        offData.LoadFile()
+        offData.CloseFile()
+        countryInfo = offData.GetData(countryName, category)
 
-    try:
-        if countryInfo is None:
-            countryInfo = "Not Found"
-    except:
-        countryInfo = "Invalid Input"
+    if countryInfo is None:
+        countryInfo = "Not Found"
 
     return jsonify(countryInfo)
 
@@ -40,15 +35,7 @@ def home():
     return render_template("home.html")
 
 
-def CheckInternetConnection(host='http://google.com'):
-    try:
-        urllib.request.urlopen(host)  # Python 3.x
-        return True
-    except:
-        return False
-
-
 if __name__ == '__main__':
-    INTERNETCONNECTION = CheckInternetConnection()
+    INTERNETCONNECTION = Connection.CheckInternetConnection()
     print(INTERNETCONNECTION)
     app.run(debug=True)

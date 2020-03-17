@@ -8,13 +8,17 @@ class BaseAPI:
         self.__api_url_base = 'https://restcountries.eu/rest/v2/name/'
 
     def get_country_info(self, country, cat):
+        if type(country) is not str:
+            return None
+        if type(cat) is not str:
+            return None
         api_url = self.__api_url_base + country
-        response = requests.get(api_url)
+        try:
+            response = requests.get(api_url)
 
-        if response.status_code == 200:
-            try:
+            if response.status_code == 200:
                 return json.loads(response.content)[0][str(cat)]
-            except:
-                return "Invalid Input"
-        else:
+            else:
+                return None
+        except:
             return None

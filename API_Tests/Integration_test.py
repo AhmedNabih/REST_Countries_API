@@ -10,16 +10,17 @@ from API.offline_Data import OfflineData
 
 class Integration(unittest.TestCase):
 
-    def test_RunIntegration1(self):
+    @patch('API.Base_API.BaseAPI.get_country_info')
+    def test_RunIntegration1(self, mock_get_country_info):
         app = Flask(__name__)
         with app.app_context():
+            mock_get_country_info.return_value = "EGY"
             baseAPI = BaseAPI()
             countryInfo = baseAPI.get_country_info(str("egypt"), "alpha3Code")  # EGY
             if countryInfo is None:
                 countryInfo = "Not Found Or Invalid Input"
 
-            output = jsonify(countryInfo)
-            self.assertEqual(str(jsonify("EGY")), str(output))
+            self.assertEqual(str("EGY"), str(countryInfo))
 
     def test_RunIntegration2(self):
         app = Flask(__name__)

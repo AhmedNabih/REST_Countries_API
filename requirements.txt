@@ -1,3 +1,5 @@
 mock
 flask
 requests
+pytest
+pytest-html

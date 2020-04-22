@@ -6,7 +6,6 @@ from API.InternetConnection import Connection
 
 # Global variable
 INTERNETCONNECTION = False
-FilePath = "offline_data/countriesData.json"
 app = Flask(__name__)
 requests_cache.install_cache(cache_name='My_cache', backend='sqlite', expire_after=10)
 

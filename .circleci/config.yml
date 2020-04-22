@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
   python: circleci/python@0.2.1
-
 jobs:
   build-and-test:
     executor: python/default
@@ -13,7 +12,8 @@ jobs:
             path: test-results
       - run:
           command: chmod u+rwx ./API_Tests/manage.py
-
+      - store_test_results:
+          path: /tmp/test-results
 
 workflows:
   main:

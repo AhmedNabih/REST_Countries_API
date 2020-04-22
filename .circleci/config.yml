@@ -9,10 +9,11 @@ jobs:
     steps:
       - checkout
       - python/install-deps
+      - store_test_results:
+            path: test-results
       - run:
           command: chmod u+rwx ./API_Tests/manage.py
-      - store_test_results:
-          path: test-results
+
 
 workflows:
   main:

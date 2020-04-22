@@ -13,7 +13,7 @@ jobs:
       - run:
           command: chmod u+rwx ./API_Tests/manage.py
       - store_test_results:
-          path: /tmp/test.xml
+          path: ~/test-results/rspec/
 
 workflows:
   main:

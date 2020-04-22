@@ -11,6 +11,7 @@ jobs:
       - python/load-cache
       - python/install-deps
       - python/save-cache
+      - run: apt-get install -y sudo
       - run:
           command: sudo ./API_Tests/test_Base_API.py test
           name: Test

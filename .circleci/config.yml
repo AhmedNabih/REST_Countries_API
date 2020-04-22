@@ -11,6 +11,8 @@ jobs:
       - python/install-deps
       - run:
           command: chmod u+rwx ./API_Tests/manage.py
+      - store_test_results:
+          path: test-results
 
 workflows:
   main:

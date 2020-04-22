@@ -15,9 +15,6 @@ jobs:
           name: TestBaseAPI
           command: python -m pytest ./API_Tests/test_Base_API.py --junitxml=test-reports/TestBaseAPI.xml --html=test-reports/TestBaseAPI.html --self-contained-html
       - run:
-          name: TestInternetConnection
-          command: python -m pytest ./API_Tests/test_InternetConnection.py --junitxml=test-reports/TestInternetConnection.xml --html=test-reports/TestInternetConnection.html --self-contained-html
-      - run:
           name: IntegrationTest
           command: python -m pytest ./API_Tests/Integration_test.py --junitxml=test-reports/Integration.xml --html=test-reports/Integration.html --self-contained-html
       - store_test_results:

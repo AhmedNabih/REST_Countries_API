@@ -18,9 +18,6 @@ jobs:
           name: TestInternetConnection
           command: python -m pytest ./API_Tests/test_InternetConnection.py --junitxml=test-reports/TestInternetConnection.xml --html=test-reports/TestInternetConnection.html --self-contained-html
       - run:
-          name: TestOfflineData
-          command: python -m pytest ./API_Tests/test_offline_Data.py --junitxml=test-reports/TestOfflineData.xml --html=test-reports/TestOfflineData.html --self-contained-html
-      - run:
           name: IntegrationTest
           command: python -m pytest ./API_Tests/Integration_test.py --junitxml=test-reports/Integration.xml --html=test-reports/Integration.html --self-contained-html
       - store_test_results:

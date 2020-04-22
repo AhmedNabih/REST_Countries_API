@@ -2,18 +2,18 @@ version: 2.1
 
 orbs:
   python: circleci/python@0.2.1
+
 jobs:
   build-and-test:
     executor: python/default
     steps:
       - checkout
+      - python/load-cache
       - python/install-deps
-      - store_test_results:
-            path: test-results
+      - python/save-cache
       - run:
-          command: chmod u+rwx ./API_Tests/manage.py -f pretty -f junit -o ~/test-results/rspec/results.xml
-      - store_test_results:
-          path: ~/test-results/rspec/results.xml
+          command: ./API_Tests/test_Base_API.py test
+          name: Test
 
 workflows:
   main:

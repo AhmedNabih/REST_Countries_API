@@ -1,8 +1,7 @@
-import json
 import unittest
 
-from flask import jsonify, Flask
-from mock import patch, Mock
+from flask import Flask
+from mock import patch
 from API.Base_API import BaseAPI
 
 

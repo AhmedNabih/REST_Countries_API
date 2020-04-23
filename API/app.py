@@ -3,6 +3,7 @@ import requests_cache
 from flask import render_template, jsonify, Flask
 from API.Base_API import BaseAPI
 
+
 app = Flask(__name__)
 requests_cache.install_cache(cache_name='My_cache', backend='sqlite', expire_after=10)
 

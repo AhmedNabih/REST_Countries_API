@@ -15,6 +15,9 @@ jobs:
           name: TestBaseAPI
           command: python -m pytest ./API_Tests/test_Base_API.py --junitxml=test-reports/TestBaseAPI.xml --html=test-reports/TestBaseAPI.html --self-contained-html
       - run:
+          name: TestAPP
+          command: python -m pytest ./API_Tests/test_app.py --junitxml=test-reports/test_app.xml --html=test-reports/test_app.html --self-contained-html
+      - run:
           name: IntegrationTest
           command: python -m pytest ./API_Tests/Integration_test.py --junitxml=test-reports/Integration.xml --html=test-reports/Integration.html --self-contained-html
       - store_test_results:
